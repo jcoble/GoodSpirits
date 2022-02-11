@@ -1,0 +1,28 @@
+table:
+  name: Employees
+  schema: public
+object_relationships:
+- name: Address
+  using:
+    foreign_key_constraint_on: AddressId
+- name: Store
+  using:
+    foreign_key_constraint_on: StoreId
+- name: employeeUser
+  using:
+    foreign_key_constraint_on: UserId
+array_relationships:
+- name: EmployeeEvents
+  using:
+    foreign_key_constraint_on:
+      column: EmployeeId
+      table:
+        name: EmployeeEvents
+        schema: public
+- name: Store_Mangr_Employees
+  using:
+    foreign_key_constraint_on:
+      column: EmployeeId
+      table:
+        name: Store_Mangr_Employee
+        schema: public

@@ -1,0 +1,37 @@
+table:
+  name: Assignments
+  schema: public
+object_relationships:
+- name: Category
+  using:
+    foreign_key_constraint_on: CategoryId
+- name: EmployeeEvent
+  using:
+    foreign_key_constraint_on: EmployeeEventId
+- name: JobSeriesCode
+  using:
+    foreign_key_constraint_on: JobSeriesCodeId
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - CategoryId
+    - EmployeeEventId
+    - Id
+    - JobSeriesCodeId
+    - Notes
+    - Status
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - Notes
+    - Status
+    filter:
+      EmployeeEventId:
+        _eq: X-Hasura-User-Id
+  role: user

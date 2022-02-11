@@ -1,0 +1,128 @@
+table:
+  name: Products
+  schema: public
+object_relationships:
+- name: Brand
+  using:
+    foreign_key_constraint_on: BrandId
+- name: Category
+  using:
+    foreign_key_constraint_on: CategoryId
+- name: ProductType
+  using:
+    foreign_key_constraint_on: ProductTypeId
+- name: Product_Price
+  using:
+    foreign_key_constraint_on: Id
+array_relationships:
+- name: OrderItems
+  using:
+    foreign_key_constraint_on:
+      column: ProductId
+      table:
+        name: OrderItem
+        schema: public
+- name: Orders
+  using:
+    foreign_key_constraint_on:
+      column: ProductId
+      table:
+        name: Order
+        schema: public
+- name: Product_Suppliers
+  using:
+    foreign_key_constraint_on:
+      column: ProductId
+      table:
+        name: Product_Supplier
+        schema: public
+- name: Stores_Products
+  using:
+    foreign_key_constraint_on:
+      column: ProductId
+      table:
+        name: Stores_Product
+        schema: public
+- name: Transactions
+  using:
+    foreign_key_constraint_on:
+      column: ProductId
+      table:
+        name: Transactions
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - BrandId
+    - CategoryId
+    - DailyInvLevelsId
+    - Description
+    - Id
+    - Name
+    - NationalMaxPrice
+    - NationalMinPrice
+    - PriceId
+    - ProductSupplierId
+    - ProductTypeId
+    - ProductsInPurchaseId
+    - PromotionId
+    - created_at
+    - created_by
+    - updated_at
+    - updated_by
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - BrandId
+    - CategoryId
+    - DailyInvLevelsId
+    - Description
+    - Id
+    - Name
+    - NationalMaxPrice
+    - NationalMinPrice
+    - PriceId
+    - ProductSupplierId
+    - ProductTypeId
+    - ProductsInPurchaseId
+    - PromotionId
+    - created_at
+    - created_by
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - BrandId
+    - CategoryId
+    - DailyInvLevelsId
+    - Description
+    - Name
+    - NationalMaxPrice
+    - NationalMinPrice
+    - PriceId
+    - ProductSupplierId
+    - ProductTypeId
+    - ProductsInPurchaseId
+    - PromotionId
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter: {}
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user

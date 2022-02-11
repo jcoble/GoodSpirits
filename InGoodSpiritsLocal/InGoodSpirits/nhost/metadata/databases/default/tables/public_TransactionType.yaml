@@ -1,0 +1,11 @@
+table:
+  name: TransactionType
+  schema: public
+array_relationships:
+- name: Transactions
+  using:
+    foreign_key_constraint_on:
+      column: TransactionType
+      table:
+        name: Transactions
+        schema: public

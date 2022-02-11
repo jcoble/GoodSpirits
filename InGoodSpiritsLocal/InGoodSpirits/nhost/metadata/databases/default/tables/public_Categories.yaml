@@ -1,0 +1,49 @@
+table:
+  name: Categories
+  schema: public
+array_relationships:
+- name: Assignments
+  using:
+    foreign_key_constraint_on:
+      column: CategoryId
+      table:
+        name: Assignments
+        schema: public
+- name: Products
+  using:
+    foreign_key_constraint_on:
+      column: CategoryId
+      table:
+        name: Products
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - CategoryTypeId
+    - Description
+    - Id
+    - Title
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - CategoryTypeId
+    - Description
+    - Title
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - CategoryTypeId
+    - Description
+    - Title
+    - deleted_at
+    filter: {}
+  role: user

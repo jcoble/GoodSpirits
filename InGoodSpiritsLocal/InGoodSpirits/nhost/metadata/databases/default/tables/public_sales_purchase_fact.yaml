@@ -1,0 +1,46 @@
+table:
+  name: sales_purchase_fact
+  schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - product_key
+    - time_key
+    - units_purchased
+    - units_sold
+    - amount_cost
+    - amount_purchased
+    - amount_sold
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - product_key
+    - time_key
+    - units_purchased
+    - units_sold
+    - amount_cost
+    - amount_purchased
+    - amount_sold
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - amount_cost
+    - amount_purchased
+    - amount_sold
+    - product_key
+    - time_key
+    - units_purchased
+    - units_sold
+    filter: {}
+  role: user
+delete_permissions:
+- permission:
+    filter: {}
+  role: user

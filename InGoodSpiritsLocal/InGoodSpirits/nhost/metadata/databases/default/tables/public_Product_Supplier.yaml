@@ -1,0 +1,43 @@
+table:
+  name: Product_Supplier
+  schema: public
+object_relationships:
+- name: Product
+  using:
+    foreign_key_constraint_on: ProductId
+- name: Store
+  using:
+    foreign_key_constraint_on: StoreId
+- name: Supplier
+  using:
+    foreign_key_constraint_on: SupplierId
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - Id
+    - ProductId
+    - StoreId
+    - SupplierId
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - Id
+    - ProductId
+    - StoreId
+    - SupplierId
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - Id
+    - StoreId
+    - ProductId
+    - SupplierId
+    filter: {}
+  role: user

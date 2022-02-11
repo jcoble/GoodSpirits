@@ -1,0 +1,42 @@
+table:
+  name: Product_Prices
+  schema: public
+object_relationships:
+- name: Product
+  using:
+    foreign_key_constraint_on:
+      column: Id
+      table:
+        name: Products
+        schema: public
+- name: Store
+  using:
+    foreign_key_constraint_on: StoreId
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - ProductId
+    - StoreId
+    - Price
+    - DateFrom
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - ProductId
+    - StoreId
+    - Price
+    - DateFrom
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - DateFrom
+    - Price
+    - StoreId
+    filter: {}
+  role: user

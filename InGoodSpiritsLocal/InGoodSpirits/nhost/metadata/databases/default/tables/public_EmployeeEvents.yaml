@@ -1,0 +1,42 @@
+table:
+  name: EmployeeEvents
+  schema: public
+object_relationships:
+- name: Employee
+  using:
+    foreign_key_constraint_on: EmployeeId
+array_relationships:
+- name: Assignments
+  using:
+    foreign_key_constraint_on:
+      column: EmployeeEventId
+      table:
+        name: Assignments
+        schema: public
+- name: Awards
+  using:
+    foreign_key_constraint_on:
+      column: EventId
+      table:
+        name: Awards
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - EndDate
+    - Id
+    - Notes
+    - StartDate
+    filter:
+      Id:
+        _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns: []
+    filter:
+      Id:
+        _eq: X-Hasura-User-Id
+  role: user

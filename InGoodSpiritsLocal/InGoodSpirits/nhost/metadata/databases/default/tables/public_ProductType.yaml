@@ -1,0 +1,42 @@
+table:
+  name: ProductType
+  schema: public
+array_relationships:
+- name: Products
+  using:
+    foreign_key_constraint_on:
+      column: ProductTypeId
+      table:
+        name: Products
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - Id
+    - Description
+    - Name
+    - deleted_at
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - Id
+    - Description
+    - Name
+    - deleted_at
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - Description
+    - Name
+    - deleted_at
+    filter: {}
+  role: user

@@ -1,0 +1,126 @@
+table:
+  name: Stores
+  schema: public
+object_relationships:
+- name: Address
+  using:
+    foreign_key_constraint_on: AddressId
+array_relationships:
+- name: Customers
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Customer
+        schema: public
+- name: Employees
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Employees
+        schema: public
+- name: Orders
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Order
+        schema: public
+- name: Product_Prices
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Product_Prices
+        schema: public
+- name: Product_Suppliers
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Product_Supplier
+        schema: public
+- name: Store_Mangr_Employees
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Store_Mangr_Employee
+        schema: public
+- name: Stores_Products
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Stores_Product
+        schema: public
+- name: Transactions
+  using:
+    foreign_key_constraint_on:
+      column: StoreId
+      table:
+        name: Transactions
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      StoreMngEmployeeId:
+        _eq: X-Hasura-User-Id
+    columns:
+    - AddressId
+    - AreaId
+    - Name
+    - PhoneNumber
+    - StoreMngEmployeeId
+    - created_at
+    - created_by
+    - updated_at
+    - updated_by
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - AddressId
+    - AreaId
+    - Id
+    - Name
+    - PhoneNumber
+    - StoreMngEmployeeId
+    - created_at
+    - created_by
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter:
+      _or:
+      - StoreMngEmployeeId:
+          _eq: X-Hasura-User-Id
+      - deleted_at:
+          _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - AddressId
+    - AreaId
+    - Id
+    - Name
+    - PhoneNumber
+    - StoreMngEmployeeId
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter:
+      StoreMngEmployeeId:
+        _eq: X-Hasura-User-Id
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user

@@ -1,0 +1,71 @@
+table:
+  name: Transactions
+  schema: public
+object_relationships:
+- name: Customer
+  using:
+    foreign_key_constraint_on: CustomerId
+- name: OrderItem
+  using:
+    foreign_key_constraint_on: OrderLineId
+- name: Product
+  using:
+    foreign_key_constraint_on: ProductId
+- name: Store
+  using:
+    foreign_key_constraint_on: StoreId
+- name: Supplier
+  using:
+    foreign_key_constraint_on: SupplierId
+- name: time_dimension
+  using:
+    foreign_key_constraint_on: time_key
+- name: transactionTypeByTransactiontype
+  using:
+    foreign_key_constraint_on: TransactionType
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - Id
+    - OrderLineId
+    - ProductId
+    - PurchaseLineId
+    - StoreId
+    - SupplierId
+    - time_key
+    - CustomerId
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - Id
+    - OrderLineId
+    - ProductId
+    - PurchaseLineId
+    - StoreId
+    - SupplierId
+    - time_key
+    - CustomerId
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - Id
+    - OrderLineId
+    - ProductId
+    - PurchaseLineId
+    - StoreId
+    - SupplierId
+    - time_key
+    - CustomerId
+    filter: {}
+  role: user
+delete_permissions:
+- permission:
+    filter: {}
+  role: user

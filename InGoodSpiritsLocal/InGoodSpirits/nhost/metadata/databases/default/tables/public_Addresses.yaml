@@ -1,0 +1,90 @@
+table:
+  name: Addresses
+  schema: public
+object_relationships:
+- name: Country
+  using:
+    foreign_key_constraint_on: CountryId
+array_relationships:
+- name: Customers
+  using:
+    foreign_key_constraint_on:
+      column: AddressId
+      table:
+        name: Customer
+        schema: public
+- name: Employees
+  using:
+    foreign_key_constraint_on:
+      column: AddressId
+      table:
+        name: Employees
+        schema: public
+- name: Stores
+  using:
+    foreign_key_constraint_on:
+      column: AddressId
+      table:
+        name: Stores
+        schema: public
+insert_permissions:
+- permission:
+    check:
+      Id:
+        _eq: X-Hasura-User-Id
+    columns:
+    - City
+    - CountryId
+    - Line1
+    - Line2
+    - Provence
+    - State
+    - Zip
+    - deleted_at
+    - updated_at
+    - updated_by
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - City
+    - CountryId
+    - Line1
+    - Line2
+    - Provence
+    - State
+    - Zip
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter:
+      _or:
+      - Id:
+          _eq: X-Hasura-User-Id
+      - deleted_at:
+          _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - City
+    - CountryId
+    - Line1
+    - Line2
+    - Provence
+    - State
+    - Zip
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter:
+      Id:
+        _eq: X-Hasura-User-Id
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user

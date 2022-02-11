@@ -1,0 +1,95 @@
+table:
+  name: Order
+  schema: public
+object_relationships:
+- name: Customer
+  using:
+    foreign_key_constraint_on: CustomerId
+- name: Product
+  using:
+    foreign_key_constraint_on: ProductId
+- name: Store
+  using:
+    foreign_key_constraint_on: StoreId
+- name: Supplier
+  using:
+    foreign_key_constraint_on: SupplierId
+array_relationships:
+- name: OrderItems
+  using:
+    foreign_key_constraint_on:
+      column: OrderId
+      table:
+        name: OrderItem
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - CustomerId
+    - Discount
+    - GrandTotal
+    - Id
+    - ItemDiscount
+    - ProductId
+    - Promo
+    - Shipping
+    - Status
+    - StoreId
+    - SubTotal
+    - SupplierId
+    - Tax
+    - Total
+    - created_at
+    - created_by
+    - updated_at
+    - updated_by
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - Id
+    - ProductId
+    - StoreId
+    - SupplierId
+    - Discount
+    - GrandTotal
+    - ItemDiscount
+    - Shipping
+    - SubTotal
+    - Tax
+    - Total
+    - Status
+    - Promo
+    - created_at
+    - deleted_at
+    - updated_at
+    - created_by
+    - CustomerId
+    - updated_by
+    filter: {}
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - CustomerId
+    - Discount
+    - ItemDiscount
+    - ProductId
+    - Promo
+    - Shipping
+    - Status
+    - StoreId
+    - SupplierId
+    - Tax
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter: {}
+  role: user

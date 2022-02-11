@@ -1,0 +1,86 @@
+table:
+  name: Customer
+  schema: public
+object_relationships:
+- name: Address
+  using:
+    foreign_key_constraint_on: AddressId
+- name: CustomerTypeCode
+  using:
+    foreign_key_constraint_on: CustomerTypeCodeId
+- name: Store
+  using:
+    foreign_key_constraint_on: StoreId
+array_relationships:
+- name: Orders
+  using:
+    foreign_key_constraint_on:
+      column: CustomerId
+      table:
+        name: Order
+        schema: public
+- name: Transactions
+  using:
+    foreign_key_constraint_on:
+      column: CustomerId
+      table:
+        name: Transactions
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - AddressId
+    - CustomerTypeCodeId
+    - DateBecameCustomer
+    - DateLastPurchase
+    - EmailAddress
+    - FirstName
+    - Id
+    - LastName
+    - StoreId
+    - created_at
+    - created_by
+    - updated_at
+    - updated_by
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - AddressId
+    - CustomerTypeCodeId
+    - DateLastPurchase
+    - EmailAddress
+    - FirstName
+    - LastName
+    - StoreId
+    - updated_at
+    - updated_by
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - AddressId
+    - CustomerTypeCodeId
+    - DateLastPurchase
+    - EmailAddress
+    - FirstName
+    - LastName
+    - StoreId
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter: {}
+    set:
+      created_by: x-hasura-Summary
+      updated_by: x-hasura-Summary
+  role: user

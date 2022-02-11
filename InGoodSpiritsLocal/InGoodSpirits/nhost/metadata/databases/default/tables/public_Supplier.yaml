@@ -1,0 +1,70 @@
+table:
+  name: Supplier
+  schema: public
+array_relationships:
+- name: Orders
+  using:
+    foreign_key_constraint_on:
+      column: SupplierId
+      table:
+        name: Order
+        schema: public
+- name: Product_Suppliers
+  using:
+    foreign_key_constraint_on:
+      column: SupplierId
+      table:
+        name: Product_Supplier
+        schema: public
+- name: Transactions
+  using:
+    foreign_key_constraint_on:
+      column: SupplierId
+      table:
+        name: Transactions
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - AddressId
+    - Description
+    - Id
+    - Name
+    - created_at
+    - created_by
+    - updated_at
+    - updated_by
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - AddressId
+    - Description
+    - Id
+    - Name
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - AddressId
+    - Description
+    - Id
+    - Name
+    - deleted_at
+    - updated_at
+    - updated_by
+    filter: {}
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user

@@ -1,0 +1,19 @@
+table:
+  name: JobSeriesCode
+  schema: public
+array_relationships:
+- name: Assignments
+  using:
+    foreign_key_constraint_on:
+      column: JobSeriesCodeId
+      table:
+        name: Assignments
+        schema: public
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - Description
+    - Title
+    filter: {}
+  role: user

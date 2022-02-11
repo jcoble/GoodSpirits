@@ -1,0 +1,25 @@
+table:
+  name: Awards
+  schema: public
+object_relationships:
+- name: EmployeeEvent
+  using:
+    foreign_key_constraint_on: EventId
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - Description
+    - EventId
+    - Id
+    - Name
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns: []
+    filter: {}
+  role: user
